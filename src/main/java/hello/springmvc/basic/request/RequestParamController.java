@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -34,7 +35,7 @@ public class RequestParamController {
         return "ok";
     }
 
-    @ResponseBody // @RestController와 같은 효과, Body에 HTTP Message를 반환
+    @ResponseBody
     @RequestMapping("/request-param-v3")
     public String requestParamV3(
             @RequestParam String username,
@@ -45,11 +46,41 @@ public class RequestParamController {
         return "ok";
     }
 
-    @ResponseBody // @RestController와 같은 효과, Body에 HTTP Message를 반환
+    @ResponseBody
     @RequestMapping("/request-param-v4")
     public String requestParamV4(String username, int age) {
 
         log.info("username = {}, age = {}", username, age);
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/request-param-required")
+    public String requestParamRequired(
+            @RequestParam(required = true) String username,
+            @RequestParam(required = false) int age
+    ) {
+
+        log.info("username = {}, age = {}", username, age);
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/request-param-default")
+    public String requestParamDefault(
+            @RequestParam(required = true, defaultValue = "guest") String username,
+            @RequestParam(required = false, defaultValue = "-1") int age
+    ) {
+
+        log.info("username = {}, age = {}", username, age);
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/request-param-map")
+    public String requestParamMap(@RequestParam Map<String, Object>paramMap) {
+
+        log.info("username = {}, age = {}", paramMap.getOrDefault("username", ""), paramMap.getOrDefault("age", 0));
         return "ok";
     }
 }

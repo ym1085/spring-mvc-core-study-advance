@@ -44,4 +44,12 @@ public class RequestParamController {
         log.info("username = {}, age = {}", username, age);
         return "ok";
     }
+
+    @ResponseBody // @RestController와 같은 효과, Body에 HTTP Message를 반환
+    @RequestMapping("/request-param-v4")
+    public String requestParamV4(String username, int age) {
+
+        log.info("username = {}, age = {}", username, age);
+        return "ok";
+    }
 }
